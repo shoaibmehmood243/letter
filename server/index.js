@@ -9,7 +9,9 @@ const cors = require("cors");
 const dbConn = require("./src/Utilities/dbConn");
 
 // Routes
-const authRoute = require("./src/Routes/auth.routes")
+const authRoutes = require("./src/Routes/auth.routes");
+const userRoutes = require("./src/Routes/user.routes");
+const friendsRoutes = require("./src/Routes/friends.routes");
 
 app.use(express.json());
 app.use(cors());
@@ -45,7 +47,9 @@ app.get("/", (req, res)=> {
     res.send("Hello from Letter | chat app.");
 });
 
-app.use('/auth', authRoute);
+app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
+app.use('/friend', friendsRoutes);
 
 // Handle 404 error
 app.use((req, res, next) => {
