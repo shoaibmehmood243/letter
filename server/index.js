@@ -14,11 +14,26 @@ const socketIO = require('socket.io')(http, {
     cors: {
         origin: 'http://127.0.0.1:5173'
     }
-})
+});
+
+let users = [];
 
 socketIO.on('connection', (socket) => {
-    console.log(`a user with id: ${socket.id} connected`);
-    socket.emit('connection', socket.handshake.time)
+    // chat message
+    socket.on('chat message', (data) => {
+        // response for all messages
+        socketIO.emit('messageResponse', data);
+    });
+
+    // when user typing
+    socket.on('typing', (data)=> socket.broadcast.emit('typingResponse', data));
+
+    // listens when a user joins
+    socket.on('newUser', (data) => {
+        users.push(data);
+        // sends/emits the users
+        socketIO.emit('newUserResponse', users);
+    })
 });
 
 app.get("/", (req, res)=> {
