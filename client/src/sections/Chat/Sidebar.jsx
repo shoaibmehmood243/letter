@@ -15,7 +15,7 @@ const Sidebar = ({ socket }) => {
             !users[0] ?
             (
                 <div>
-                    <h1>No user</h1>
+                    <h1 className='text-center'>No user added</h1>
                 </div>
             ) : (
                 users.map((user) => (

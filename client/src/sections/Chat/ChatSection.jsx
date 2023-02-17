@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { vector, send } from "../../assets";
 import { Button, Input } from "../../components";
 
-const Chat = ({ socket, userMessages, lastMessageRef, typingStatus }) => {
+const ChatSection = ({ socket, userMessages, lastMessageRef, typingStatus }) => {
     const [message, setMessage] = useState("");
     const user = JSON.parse(localStorage.getItem('user'))?.user;
     const now = new Date();
@@ -67,4 +67,4 @@ const Chat = ({ socket, userMessages, lastMessageRef, typingStatus }) => {
     )
 }
 
-export default Chat;
+export default ChatSection;

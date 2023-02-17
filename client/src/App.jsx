@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
-import { Home, Signup } from "./pages";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
+import { Home, Chat, Signup, Login } from "./pages";
 import socketIO from "socket.io-client";
+import Navbar from "./components/Navbar";
 const SERVER = "http://localhost:8080"
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
   socket.on('connection', () => {
     console.log('I am connected');
   });
-  useEffect(()=> {
+  useLayoutEffect(()=> {
     if(localStorage.getItem("user")) {
       setIsAuth(true);
     }
@@ -18,6 +19,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <Navbar />
       <Routes>
         <Route path="*" element={
           <Routes>
@@ -27,7 +29,8 @@ function App() {
                   <Route path="*" element={
                     <Routes>
                       <Route path="/" element={<Home socket={socket} />} />
-                      <Route exact path='/sign-up' element={<Navigate to='/' />} />
+                      <Route path="/chat" element={<Chat socket={socket} />} />
+                      <Route exact path='/login' element={<Navigate to='/' />} />
                       <Route exact path='*' element={<Navigate to='/' />} />
                     </Routes>
                   } />
@@ -35,7 +38,8 @@ function App() {
                   <Route path="*" element={
                     <Routes>
                       <Route exact path="/sign-up" element={<Signup socket={socket} />} />
-                      <Route exact path='*' element={isAuth ? <Outlet /> : <Navigate to='/sign-up' />} />
+                      <Route exact path="/login" element={<Login socket={socket} />} />
+                      <Route exact path='*' element={isAuth ? <Outlet /> : <Navigate to='/login' />} />
                     </Routes>
                   } />
                 )
