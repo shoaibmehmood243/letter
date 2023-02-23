@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Button = ({ label, onClick, className, type }) => {
+const Button = ({ label, onClick, className, type, variant="primary" }) => {
   return (
-    <button type={type} className={`bg-[#2190ff] py-2 px-6 rounded-lg ring-2 ring-[#2190ff] font-semibold text-center text-white ${className}`} onClick={onClick}>{label}</button>
+    <button type={type} className={`${ variant === "primary" ? "bg-[#2190ff] text-white ring-[#2190ff] ring-2" : " bg-transparent text-gray-400 ring-1 ring-gray-200"} py-2 px-6 rounded-lg font-semibold text-center  ${className}`} onClick={onClick}>{label}</button>
   )
 }
 

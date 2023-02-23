@@ -21,8 +21,8 @@ const Navbar = () => {
         {
           user ?
           (<>
-            <div className='uppercase text-2xl cursor-pointer hover:border-2 text-[#2190ff] hover:border-[#2190ff] rounded-lg h-12 w-16 flex items-center justify-center'><AiOutlineHome /></div>
-            <div className='uppercase text-2xl cursor-pointer hover:border-2 text-[#2190ff] hover:border-[#2190ff] rounded-lg h-12 w-16 flex items-center justify-center'><HiOutlineChatBubbleBottomCenterText /></div>
+            <Link to="/" className='uppercase text-2xl cursor-pointer hover:border-2 text-[#2190ff] hover:border-[#2190ff] rounded-lg h-12 w-16 flex items-center justify-center'><AiOutlineHome /></Link>
+            <Link to="/chat" className='uppercase text-2xl cursor-pointer hover:border-2 text-[#2190ff] hover:border-[#2190ff] rounded-lg h-12 w-16 flex items-center justify-center'><HiOutlineChatBubbleBottomCenterText /></Link>
             <div onClick={logout} className='uppercase text-2xl cursor-pointer hover:border-2 text-[#2190ff] hover:border-[#2190ff] rounded-lg h-12 w-16 flex items-center justify-center'><AiOutlinePoweroff /></div>
             <div className='uppercase text-xl cursor-pointer border-2 text-white bg-[#2190ff] border-[#2190ff] rounded-full h-10 w-10 flex items-center justify-center'>{username}</div>
           </>) : (

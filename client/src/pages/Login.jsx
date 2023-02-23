@@ -27,7 +27,7 @@ const Login = ({ socket }) => {
           position: toast.POSITION.BOTTOM_RIGHT
         })
         setIsClicked(false);
-        localStorage.setItem("user", JSON.stringify({user: {...data}}));
+        localStorage.setItem("user", JSON.stringify({user: {...res.data.data}}));
         socket.emit('newUser', { ...data, socketId: socket.id });
         setTimeout(() => navigate("/"), 1000);
       }

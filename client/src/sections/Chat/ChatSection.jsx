@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { vector, send } from "../../assets";
+import { vector } from "../../assets";
 import { Button, Input } from "../../components";
+import { FiSend } from "react-icons/fi";
 
 const ChatSection = ({ socket, userMessages, lastMessageRef, typingStatus }) => {
     const [message, setMessage] = useState("");
@@ -30,6 +31,12 @@ const ChatSection = ({ socket, userMessages, lastMessageRef, typingStatus }) => 
     return (
         <div className='h-full flex flex-col justify-between'>
             <div className='w-full h-full max-h-[70vh] overflow-y-auto'>
+                <div className='border-b-2 pb-3'>
+                    <div className='flex gap-2 items-center'>
+                        <div className='h-8 w-8 bg-[#2190ff] text-white rounded-full flex items-center justify-center uppercase'>S</div>
+                        <h4 className='font-semibold'>Shoaib</h4>
+                    </div>
+                </div>
                 <div>
                     {
                         userMessages?.map((data) => (
@@ -59,7 +66,7 @@ const ChatSection = ({ socket, userMessages, lastMessageRef, typingStatus }) => 
             <form className='w-full px-4 mt-4' onSubmit={handleSubmit}>
                 <div className='grid grid-cols-7 gap-4'>
                     <Input className="col-span-6" placeholder="Write a message down here..." type="text" value={message} onChange={(e)=> setMessage(e.target.value)} onKeyDown={handleTyping} />
-                    <Button label={<img className='mx-auto h-6 w-8' src={send} />} />
+                    <Button className="flex items-center justify-center" label={<FiSend className='w-10 h-6' />} />
                 </div>
             </form>
             <p className='text-sm text-gray-400 pl-4 mt-2'>{typingStatus}</p>
