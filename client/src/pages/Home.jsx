@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { getAllUsers, getFriends } from '../utils/api';
+import { getAllUsers, getFriendRequests, getFriends } from '../utils/api';
 import { Loader } from "../components";
 import Cards from '../sections/Home/Cards';
 import DataSection from '../sections/Home/DataSection';
@@ -8,6 +8,7 @@ import DataSection from '../sections/Home/DataSection';
 const Home = () => {
   const [data, setData] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [friendRequests, setFriendFriendRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [active, setIsActive] = useState(1);
   const [refresh, toggle] = useState(false);
@@ -47,12 +48,32 @@ const Home = () => {
       throw new Error(error);
     }
   }
+
+  const getFriendsRequestsData = async()=> {
+    try {
+      axios.get(getFriendRequests).then((res) => {
+        if(res.data.success === true) {
+          setIsLoading(false);
+          setFriendFriendRequests(res.data.data);
+        } else {
+          setIsLoading(false);
+          setFriendFriendRequests([]);
+        }
+      })
+    } catch (error) {
+      setIsLoading(false);
+      setFriendFriendRequests([]);
+      throw new Error(error);
+    }
+  }
   
   useEffect(()=> {
     if(active === 1) {
       getData();
     } else if(active === 2) {
       getFriendsData();
+    } else {
+      getFriendsRequestsData();
     }
   }, [active, refresh]);
 
@@ -64,7 +85,10 @@ const Home = () => {
             People you might like
           </div>
           <div onClick={()=> setIsActive(2)} className={`${active === 2 ? "bg-[#2190ff]" : "bg-[#f5f9ff]"} ${active === 2 ? "text-white" : "text-black"} rounded-lg min-w-[300px] shadow-md shadow-[#2190ff]/5 hover:bg-[#2190ff] hover:text-white font-semibold cursor-pointer px-4 py-6 text-center`}>
-            (200) Followers
+            (200) Friends
+          </div>
+          <div onClick={()=> setIsActive(3)} className={`${active === 3 ? "bg-[#2190ff]" : "bg-[#f5f9ff]"} ${active === 3 ? "text-white" : "text-black"} rounded-lg min-w-[300px] shadow-md shadow-[#2190ff]/5 hover:bg-[#2190ff] hover:text-white font-semibold cursor-pointer px-4 py-6 text-center`}>
+            (200) Friend Requests
           </div>
         </div>
 
@@ -72,8 +96,10 @@ const Home = () => {
         {
           active === 1 ? (
             <DataSection data={data} loading={isLoading} active={active} toggle={toggle} />
-          ) : (
+          ) : 2 ? (
             <DataSection data={friends} loading={isLoading} active={active} toggle={toggle} />
+          ) : (
+            <DataSection data={friendRequests} loading={isLoading} active={active} toggle={toggle} />
           )
         }
       </div>

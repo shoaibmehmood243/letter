@@ -62,6 +62,21 @@ const friendController = {
             res.status(400).send({ error: true, message: error });
         }
     },
+    getRequests: async (req, res, next) => {
+        try {
+            const user = await User.findById(req.params.id); // get user by ID
+            const friends = await Friends.find({
+                $or: [{ user1_id: user._id }, { user2_id: user._id }],
+                is_friend: false, // only return friends who are not friends yet but have sent the request(is_friend = false)
+            })
+            .populate("user2_id", "username email number"); // populate user2_id field with username and email
+
+            res.status(200).send({ success: true, data: friends });
+
+        } catch (error) {
+            res.status(400).send({ error: true, message: error });
+        }
+    },
     unfollow: async (req, res, next) => {
         try {
             const { user1_id, user2_id } = req.body;
